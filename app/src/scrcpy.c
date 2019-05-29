@@ -135,6 +135,14 @@ handle_event(SDL_Event *event, bool control) {
                 return false;
             }
             break;
+        case EVENT_DEVICE_CLIPBOARD: {
+            char *clipboard_text =
+                receiver_consume_device_clipboard(&controller.receiver);
+            if (clipboard_text) {
+                SDL_SetClipboardText(clipboard_text);
+                SDL_free(clipboard_text);
+            }
+        }
         case SDL_WINDOWEVENT:
             switch (event->window.event) {
                 case SDL_WINDOWEVENT_EXPOSED:
